@@ -1,0 +1,71 @@
+https://marklowg.medium.com/how-to-unit-test-angular-ngrx-effects-ce5075e870a2
+
+// StoreModule.forRoot(reducers),
+    //EffectsModule.forRoot(effects),
+    StoreDevtoolsModule.instrument({
+      name: 'NgRx Demo App',
+      logOnly: false
+    })
+
+
+------------------------
+ng g m features/some-feature --route some-feature --module app
+----------------------------------------------------------------------
+ng g m shared --route shared --module app
+ng g m core --route core --module app
+ng g m cms --route cms --module app
+
+
+ng g m cms/container/feature1 --route feature1 --module cms
+ng g m cms/container/feature2 --route feature2 --module cms
+ng g m cms/container/feature3 --route feature3 --module cms
+ng g m cms/container/feature4 --route feature4 --module cms
+ng g @ngrx/schematics:feature cms/container/feature1/something -a --module cms/cms
+-----------------------------
+@ngrx/store
+@ngrx/store-devtools
+npm i @ngrx/effects
+npm i @ngrx/schematics
+
+---------------------------------
+app
+	store
+	service
+	fmodule1
+	fmodule2
+	fmodule3....
+	cms
+		 componets
+		 containers
+		  	fmodule1
+		  	fmodule2
+			  	 store
+			  	 constant
+			  	 service
+			fmodule3....
+		 constant
+		 store
+		 common-store
+		   reducers
+		   effects
+		 service
+	shared
+		 componets
+		 constants
+		 directives
+	core
+		 componets
+		 constants
+		 directives
+		 store
+---------------------------------
+Root
+ng g @ngrx/schematics:st something --module=app.module.ts --statePath=store --dry-run
+ng generate @ngrx/schematics:action store/actions/Users --dry-run
+ng generate @ngrx/schematics:reducer store/reducers/Users --dry-run
+ng generate @ngrx/schematics:effect store/effects/Users -m app.module.ts --dry-run
+
+Feature
+ng g @ngrx/schematics:f cms/store/something -a --module cms/cms --dry-run
+
+Combine Reducers
